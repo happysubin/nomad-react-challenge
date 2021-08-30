@@ -101,7 +101,7 @@ const useDetail = (id, path) => {
   return state;
 };
 
-const useTabs = (country) => {
+const useTabs = () => {
   const [tabs, setTabs] = useState();
 
   return { tabs, setTabs };
@@ -117,6 +117,7 @@ const Detail = (props) => {
   const { loading, data: result } = useDetail(id, path);
   const { tabs, setTabs } = useTabs();
   console.log(result);
+  console.log(tabs);
   return loading ? (
     <Loader />
   ) : (
@@ -161,19 +162,52 @@ const Detail = (props) => {
           <ItemContainer>
             <List>
               <Item>
-                <Button onClick={setTabs}>Video</Button>
                 <Button
                   onClick={() =>
-                    setTabs(result.production_countries[0].iso_3166_1)
+                    setTabs({
+                      value: result.videos.results[0].key,
+                      isVideo: true,
+                    })
+                  }
+                >
+                  Video
+                </Button>
+                <Button
+                  onClick={() =>
+                    setTabs({
+                      value: result.production_countries[0].iso_3166_1,
+                      isVideo: false,
+                    })
                   }
                 >
                   Production_countries
                 </Button>
-                <Button>Production_Company</Button>
+                <Button
+                  onClick={() =>
+                    setTabs({
+                      value: result.production_companies[0].name,
+                      isVideo: false,
+                    })
+                  }
+                >
+                  Production_Company
+                </Button>
               </Item>
             </List>
           </ItemContainer>
-          <p>{tabs ? tabs : ""}</p>
+          {tabs ? (
+            tabs.isVideo ? (
+              <iframe
+                width="300"
+                src={`https://www.youtube.com/embed/${tabs.value}?rel=0&amp;autoplay=1&mute=1&amp;loop=1;playlist=${tabs.value}`}
+                frameborder="0"
+              ></iframe>
+            ) : (
+              <p>{tabs.value}</p>
+            )
+          ) : (
+            ""
+          )}
         </Data>
       </Content>
     </Container>
