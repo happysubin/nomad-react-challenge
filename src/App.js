@@ -1,9 +1,13 @@
 import React from "react";
-
+import GlobalStyles from "./Component/GlobalStyles";
+import HomeRouter from "./Component/Router";
 
 function App() {
   return (
-    <><h1>awses!</h1></>
+    <>
+      <GlobalStyles />
+      <HomeRouter />;
+    </>
   );
 }
 
