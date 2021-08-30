@@ -17,6 +17,7 @@ const GlobalStyles = createGlobalStyle`
         color:white;
         padding-top:50px;
     }
+    
 `;
 
 export default GlobalStyles;

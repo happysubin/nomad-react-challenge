@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { moviesApi } from "../api";
 import Loader from "../Component/Loader";
+import Poster from "../Component/Poster";
 import Section from "../Component/Section";
 
 const useMovie = () => {
@@ -34,10 +35,8 @@ const useMovie = () => {
   return state;
 };
 
-const MovieBox = (props) => {
+const MovieBox = () => {
   const { nowPlaying, upcoming, popular, loading } = useMovie();
-  console.log(nowPlaying, upcoming, popular);
-  console.log(props);
   return loading ? (
     <Loader />
   ) : (
@@ -45,17 +44,47 @@ const MovieBox = (props) => {
       <Section>
         {nowPlaying &&
           nowPlaying.length > 0 &&
-          nowPlaying.map((movie) => <h4>{movie.title}</h4>)}
+          nowPlaying.map((movie) => (
+            <Poster
+              key={movie.id}
+              id={movie.id}
+              imageUrl={movie.poster_path}
+              rating={movie.vote_average}
+              title={movie.original_title}
+              year={movie.release_date.substr(0, 4)}
+              isMovie={true}
+            />
+          ))}
       </Section>
       <Section>
         {upcoming &&
           upcoming.length > 0 &&
-          upcoming.map((movie) => <h4>{movie.title}</h4>)}
+          upcoming.map((movie) => (
+            <Poster
+              key={movie.id}
+              id={movie.id}
+              imageUrl={movie.poster_path}
+              rating={movie.vote_average}
+              title={movie.original_title}
+              year={movie.release_date.substr(0, 4)}
+              isMovie={true}
+            />
+          ))}
       </Section>
       <Section>
         {popular &&
           popular.length > 0 &&
-          popular.map((movie) => <h4>{movie.title}</h4>)}
+          popular.map((movie) => (
+            <Poster
+              key={movie.id}
+              id={movie.id}
+              imageUrl={movie.poster_path}
+              rating={movie.vote_average}
+              title={movie.original_title}
+              year={movie.release_date.substr(0, 4)}
+              isMovie={true}
+            />
+          ))}
       </Section>
     </>
   );

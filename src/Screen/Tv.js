@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { tvApi } from "../api";
 import Loader from "../Component/Loader";
+import Poster from "../Component/Poster";
 import Section from "../Component/Section";
 
 const useTv = () => {
@@ -41,17 +42,47 @@ const TvBox = () => {
       <Section>
         {airingToday &&
           airingToday.length > 0 &&
-          airingToday.map((tv) => <h4>{tv.name}</h4>)}
+          airingToday.map((tv) => (
+            <Poster
+              title={tv.original_name}
+              rating={tv.vote_average}
+              id={tv.id}
+              key={tv.id}
+              imageUrl={tv.poster_path}
+              year={tv.first_air_date ? tv.first_air_date.substr(0, 4) : ""}
+              isMovie={false}
+            />
+          ))}
       </Section>
       <Section>
         {topRated &&
           topRated.length > 0 &&
-          topRated.map((tv) => <h4>{tv.name}</h4>)}
+          topRated.map((tv) => (
+            <Poster
+              title={tv.original_name}
+              rating={tv.vote_average}
+              id={tv.id}
+              key={tv.id}
+              imageUrl={tv.poster_path}
+              year={tv.first_air_date ? tv.first_air_date.substr(0, 4) : ""}
+              isMovie={false}
+            />
+          ))}
       </Section>
       <Section>
         {popular &&
           popular.length > 0 &&
-          popular.map((tv) => <h4>{tv.name}</h4>)}
+          popular.map((tv) => (
+            <Poster
+              title={tv.original_name}
+              rating={tv.vote_average}
+              id={tv.id}
+              key={tv.id}
+              imageUrl={tv.poster_path}
+              year={tv.first_air_date ? tv.first_air_date.substr(0, 4) : ""}
+              isMovie={false}
+            />
+          ))}
       </Section>
     </>
   );
