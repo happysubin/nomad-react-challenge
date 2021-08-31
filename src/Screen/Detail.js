@@ -3,6 +3,7 @@ import { moviesApi, tvApi } from "../api";
 import styled from "styled-components";
 import Loader from "../Component/Loader";
 import { Link } from "react-router-dom";
+import Season from "../Component/Season";
 
 const Container = styled.div`
   height: calc(100vh - 50px);
@@ -68,6 +69,10 @@ const Overview = styled.p`
   width: 50%;
 `;
 
+const SeasonContainer = styled.div`
+  display: flex;
+`;
+
 const List = styled.ul`
   display: flex;
 `;
@@ -75,6 +80,7 @@ const List = styled.ul`
 const Button = styled.button`
   background-color: transparent;
   color: white;
+  margin-bottom: 10px;
 `;
 const useDetail = (id, path) => {
   const [state, setState] = useState({
@@ -107,6 +113,11 @@ const useTabs = () => {
   return { tabs, setTabs };
 };
 
+const useSeason = () => {
+  const [season, setSeason] = useState();
+  return { season, setSeason };
+};
+
 const Detail = (props) => {
   const {
     match: {
@@ -116,8 +127,10 @@ const Detail = (props) => {
   } = props;
   const { loading, data: result } = useDetail(id, path);
   const { tabs, setTabs } = useTabs();
+  const { season, setSeason } = useSeason();
   console.log(result);
   console.log(tabs);
+  console.log(season);
   return loading ? (
     <Loader />
   ) : (
@@ -154,9 +167,10 @@ const Detail = (props) => {
             </Item>
             <Divider>•</Divider>
             <Item>
-              <a href={`https://www.imdb.com/title/${result.imdb_id}`}>IMDB</a>
+              <a href={`https://www.imdb.com/title/${result.imdb_id}`}>
+                GO IMDB
+              </a>
             </Item>
-            <Divider>•</Divider>
           </ItemContainer>
           <Overview>{result.overview}</Overview>
           <ItemContainer>
@@ -164,10 +178,12 @@ const Detail = (props) => {
               <Item>
                 <Button
                   onClick={() =>
-                    setTabs({
-                      value: result.videos.results[0].key,
-                      isVideo: true,
-                    })
+                    result.videos.results.length !== 0
+                      ? setTabs({
+                          value: result.videos.results[0].key,
+                          isVideo: true,
+                        })
+                      : setTabs()
                   }
                 >
                   Video
@@ -184,13 +200,22 @@ const Detail = (props) => {
                 </Button>
                 <Button
                   onClick={() =>
-                    setTabs({
-                      value: result.production_companies[0].name,
-                      isVideo: false,
-                    })
+                    result.production_companies.length !== 0
+                      ? setTabs({
+                          value: result.production_companies[0].name,
+                          isVideo: false,
+                        })
+                      : setTabs()
                   }
                 >
                   Production_Company
+                </Button>
+                <Button
+                  onClick={() =>
+                    result.seasons ? setSeason(result.seasons) : setSeason()
+                  }
+                >
+                  Season
                 </Button>
               </Item>
             </List>
@@ -208,6 +233,14 @@ const Detail = (props) => {
           ) : (
             ""
           )}
+
+          <SeasonContainer>
+            {season &&
+              season.length > 0 &&
+              season.map((content) => (
+                <Season name={content.name} poster={content.poster_path} />
+              ))}
+          </SeasonContainer>
         </Data>
       </Content>
     </Container>

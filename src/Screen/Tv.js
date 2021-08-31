@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { tvApi } from "../api";
 import Loader from "../Component/Loader";
+import Message from "../Component/Message";
 import Poster from "../Component/Poster";
 import Section from "../Component/Section";
 
