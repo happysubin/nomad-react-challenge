@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Helmet from "react-helmet";
 import { tvApi } from "../api";
 import Loader from "../Component/Loader";
 import Message from "../Component/Message";
@@ -37,9 +38,17 @@ const useTv = () => {
 const TvBox = () => {
   const { loading, airingToday, topRated, popular } = useTv();
   return loading ? (
-    <Loader />
+    <>
+      <Helmet>
+        <title>Loading.. | Nomflix</title>
+      </Helmet>
+      <Loader />
+    </>
   ) : (
     <>
+      <Helmet>
+        <title>Tv | Nomflix</title>
+      </Helmet>
       <Section>
         {airingToday &&
           airingToday.length > 0 &&

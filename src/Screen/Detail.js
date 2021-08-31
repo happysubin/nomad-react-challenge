@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { moviesApi, tvApi } from "../api";
 import styled from "styled-components";
 import Loader from "../Component/Loader";
-import { Link } from "react-router-dom";
+import Helmet from "react-helmet";
 import Season from "../Component/Season";
 
 const Container = styled.div`
@@ -132,9 +132,20 @@ const Detail = (props) => {
   console.log(tabs);
   console.log(season);
   return loading ? (
-    <Loader />
+    <>
+      <Helmet>
+        <title>Loading | Nomflix</title>
+      </Helmet>
+      <Loader />
+    </>
   ) : (
     <Container>
+      <Helmet>
+        <title>
+          {result.original_title ? result.original_title : result.original_name}{" "}
+          | Nomflix
+        </title>
+      </Helmet>
       <BackDrop
         bgImage={`https://image.tmdb.org/t/p/original${result.backdrop_path}`}
       />
@@ -154,7 +165,12 @@ const Detail = (props) => {
           </Title>
           <ItemContainer>
             <Item>
-              {result.runtime ? result.runtime : result.episode_run_time[0]} min
+              {result.runtime
+                ? result.runtime
+                : result.episode_run_time
+                ? result.episode_run_time[0]
+                : ""}{" "}
+              min
             </Item>
             <Divider>•</Divider>
             <Item>

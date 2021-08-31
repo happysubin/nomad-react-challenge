@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import Helmet from "react-helmet";
 import { moviesApi } from "../api";
 import Loader from "../Component/Loader";
 import Poster from "../Component/Poster";
@@ -38,9 +39,17 @@ const useMovie = () => {
 const MovieBox = () => {
   const { nowPlaying, upcoming, popular, loading } = useMovie();
   return loading ? (
-    <Loader />
+    <>
+      <Helmet>
+        <title>Loading.. | Nomflix</title>
+      </Helmet>
+      <Loader />
+    </>
   ) : (
     <>
+      <Helmet>
+        <title>Movies | Nomflix</title>
+      </Helmet>
       <Section>
         {nowPlaying &&
           nowPlaying.length > 0 &&

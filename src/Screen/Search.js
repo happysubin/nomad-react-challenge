@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import Helmet from "react-helmet";
 import { moviesApi, tvApi } from "../api";
 import Loader from "../Component/Loader";
 import Section from "../Component/Section";
@@ -74,6 +75,9 @@ const SearchBox = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>Search | Suflix</title>
+      </Helmet>
       <Form onSubmit={handleSubmit}>
         <Input
           placeholder="Searches.. Movies or Shows"
