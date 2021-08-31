@@ -26,7 +26,7 @@
     "deploy": "gh-pages -d build",
     "predeploy": "npm run build"
   },
-  "homepage": "https://happysubin.io/react-challenge",
+  "homepage": "https://frosty-archimedes-5869f1.netlify.app/",
   "eslintConfig": {
     "extends": [
       "react-app",
